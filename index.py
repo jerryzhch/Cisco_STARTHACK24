@@ -129,15 +129,14 @@ for line in r.iter_lines():
             flag = False
             if datetime.now().second%30 == 0 and not flag:
                 flag = True
-                ref = db.reference('/')
                 i = 0
                 for device_id, (x, y) in data.items():
+                    ref = db.reference(f'/nurses/nurse{i-3}')
                     i+=1
                     if 3<i and i <10:
                         new_dict = {
-                            f'nurses/nurse{i-3}' : {
                             "xPos": x*3,
-                            "yPos": y*3 }
+                            "yPos": y*3 
                         }
                         #new_data.append(new_dict)
                         ref.update(
