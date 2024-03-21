@@ -127,7 +127,7 @@ for line in r.iter_lines():
             # })
             flag = False
             # due to firebase upload limitations
-            if datetime.now().second%30 == 0 and not flag:
+            if datetime.now().second%20 == 0 and not flag:
                 flag = True
                 i = 0
                 for device_id, (x, y) in data.items():
@@ -145,7 +145,7 @@ for line in r.iter_lines():
                         )
 
 
-            elif datetime.now().second%30 != 0:
+            elif datetime.now().second%20 != 0:
                 flag = False
                 # update_plot(data)
             # print(data)
