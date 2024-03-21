@@ -14,8 +14,7 @@ const NeedButton = ({ type }) => {
     push(ref(db, 'alerts/'), {
       alertType: type,
       bed,
-      yPos: 10,
-      xPos: 3,
+      level: PictoTypes[type].level,
     }).then(() => {
       f7.dialog.alert('Type: ' + PictoTypes[type]?.desc, 'Alert sent');
     });
