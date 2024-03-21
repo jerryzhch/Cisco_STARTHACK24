@@ -1,7 +1,7 @@
 import { AccordionContent, Button } from 'framework7-react';
 import React from 'react';
 import './alert-container.style.less';
-import { PictoTypes } from '../../assets/pictograms/picto-types.ts';
+import { PictoTypes } from '../../../public/pictograms/picto-types.ts';
 
 const AlertContainer = ({ showFeebackBtns, alertInfo, acceptAlert }) => {
   return (
@@ -9,7 +9,7 @@ const AlertContainer = ({ showFeebackBtns, alertInfo, acceptAlert }) => {
       <a href="" className="item-link item-content">
         <div className="item-inner">
           <div className="alert-item-grid">
-            <img className="alert-icon" src={`../assets/pictograms/${PictoTypes[alertInfo.alertType].pictogram}`} />
+            <img className="alert-icon" src={`../../public/pictograms/${PictoTypes[alertInfo.alertType].pictogram}`} />
             <p className="alert-location">{alertInfo.bed.replace(':', '.')}</p>
             {alertInfo.distance && (
               <p className="alert-distance">

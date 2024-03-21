@@ -1,6 +1,6 @@
 import { Button, f7 } from 'framework7-react';
 import React, { useCallback, useContext } from 'react';
-import { PictoTypes } from '../../assets/pictograms/picto-types.ts';
+import { PictoTypes } from '../../../public/pictograms/picto-types.js';
 import { ref, push } from 'firebase/database';
 import './need-button.style.less';
 import { BedContext } from '../../pages/patient.tsx';
@@ -24,7 +24,7 @@ const NeedButton = ({ type }) => {
     PictoTypes[type] && (
       <Button className="need-button" onClick={triggerAlert} large fill>
         <div className="need-button-inner">
-          <img className="alert-icon" src={`../assets/pictograms/${PictoTypes[type]?.pictogram}`} />
+          <img className="alert-icon" src={`../../public/pictograms/${PictoTypes[type]?.pictogram}`} />
           {PictoTypes[type]?.desc}
         </div>
       </Button>
