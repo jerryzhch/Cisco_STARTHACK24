@@ -5,6 +5,7 @@ import requests
 import json
 import socket
 import os
+from datetime import datetime
 import sys
 
 import matplotlib.pyplot as plt
@@ -85,9 +86,8 @@ for line in r.iter_lines():
             # print(event['deviceLocationUpdate']['xPos'])
             
             json_path = 'src/components/dashboard-grid/positions.json'
-            
-
             data[event['deviceLocationUpdate']['device']['deviceId']] = (event['deviceLocationUpdate']['xPos'],event['deviceLocationUpdate']['yPos'])
+            data = data[-10:]
             new_data = []
             for device_id, (x, y) in data.items():
                 new_dict = {
@@ -98,10 +98,14 @@ for line in r.iter_lines():
                 new_data.append(new_dict)
 
             # with open('positions.json', 'w') as json_file:
-            with open(json_path, 'w') as json_file:
-
-                json.dump(new_data, json_file)
-            # update_plot(data)
+            flag = False
+            if datetime.now().second%30 == 0 and not flag:
+                flag = True
+                with open(json_path, 'w') as json_file:
+                    json.dump(new_data, json_file)
+            elif datetime.now().second%30 != 0:
+                flag = False
+                # update_plot(data)
             print(data)
 # %%
 
