@@ -28,6 +28,10 @@ const routes = [
     path: PATH_DASHBOARD,
     component: DashboardPage,
   },
+  {
+    path: '(.*)',
+    component: HomePage,
+  },
 ];
 
 export default routes;

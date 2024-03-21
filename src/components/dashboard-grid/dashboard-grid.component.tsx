@@ -58,7 +58,7 @@ const DashboardGrid = () => {
                   height: '40px',
                 }}
               >
-                <img key={k} src={'../../assets/pictograms/nurse.png'} alt="nurse" />
+                <img key={k} src={'../../public/pictograms/nurse.png'} alt="nurse" />
                 <p style={{ margin: 0 }}>{k}</p>
               </div>
             ))}

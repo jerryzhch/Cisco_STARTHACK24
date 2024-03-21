@@ -1,6 +1,6 @@
 import { Button, f7 } from 'framework7-react';
 import React, { useCallback, useContext } from 'react';
-import { PictoTypes } from '../../../public/pictograms/picto-types.js';
+import { PictoTypes } from '../../assets/pictograms/picto-types.js';
 import { ref, push } from 'firebase/database';
 import './need-button.style.less';
 import { BedContext } from '../../pages/patient.tsx';

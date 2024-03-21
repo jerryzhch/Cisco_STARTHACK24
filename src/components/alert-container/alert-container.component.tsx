@@ -1,7 +1,7 @@
 import { AccordionContent, Button } from 'framework7-react';
 import React from 'react';
 import './alert-container.style.less';
-import { PictoTypes } from '../../../public/pictograms/picto-types.ts';
+import { PictoTypes } from '../../assets/pictograms/picto-types.ts';
 
 const AlertContainer = ({ showFeebackBtns, alertInfo, acceptAlert }) => {
   return (
