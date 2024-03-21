@@ -9,8 +9,19 @@ import { onValue, ref } from '@firebase/database';
 const DashboardGrid = () => {
   const db = useContext(FB_DATABASE);
   const [nursePositions, setNursePositions] = useState(undefined);
+  const [bedPositions, setBedPositions] = useState(undefined);
   const [timestamp, setTimestamp] = useState(new Date().toLocaleDateString());
+  const bedRef = ref(db, '/beds')
   const nursesRef = ref(db, '/nurses');
+
+  useEffect(() => {
+    const unsubscribe = onValue(bedRef, (snapshot) => {
+      setBedPositions(snapshot.val());
+      setTimestamp(new Date().toLocaleString());
+    });
+    return () => unsubscribe();
+  }, [bedPositions]);
+  
 
   useEffect(() => {
     const unsubscribe = onValue(nursesRef, (snapshot) => {
@@ -62,6 +73,23 @@ const DashboardGrid = () => {
                 <p style={{ margin: 0 }}>{k}</p>
               </div>
             ))}
+           {bedPositions && 
+            Object.keys(bedPositions).map((b) => (
+            <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'absolute',
+                  top: `${bedPositions[b].yPos}px`,
+                  left: `${bedPositions[b].xPos}px`,
+                  fontWeight: 'bold',
+                  width: '40px',
+                  height: '40px',
+                }}
+              >
+                <img key={b} src={'../../public/pictograms/19_bed.png'} alt="bed" />
+                <p style={{ margin: 0 }}>{b}</p>
+              </div> ))}
         </Block>
       </div>
       <div className="dashboard-grid-right">
