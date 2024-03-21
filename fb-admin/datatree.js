@@ -25,16 +25,19 @@ function calculateDistance(x1, y1, x2, y2) {
 }
 
 // Function to choose the nearest nurse based on the provided x and y coordinates
-function choose_nurse(x, y) {
+// Function to choose the nearest nurse based on the provided x and y coordinates
+function choose_nurse(x, y, alertLevel) {
   let minDistance = Infinity;
   let nearestNurse = null;
+  console.log(Object.keys(allNurses).filter(a => allNurses[a].level >= alertLevel))
 
-  for (const nurseId in allNurses) {
+  for (const nurseId in Object.keys(allNurses).filter(a => allNurses[a].level >= alertLevel).sort((a,b) => a.level - b.level)) {
       const nurse = allNurses[nurseId];
       const nurseX = nurse.xPos;
       const nurseY = nurse.yPos;
       const dist = calculateDistance(x, y, nurseX, nurseY);
 
+      // Check if the nurse is available
       if (dist < minDistance && nurse.available) {
           minDistance = dist;
           nearestNurse = nurseId;
@@ -46,6 +49,7 @@ function choose_nurse(x, y) {
 
 nursesRef.on("child_added", (snapshot) => {
   allNurses[snapshot.key] = snapshot.val()
+  console.log(allNurses)
 })
 
 bedsRef.on("child_changed", (snapshot) => {
@@ -66,7 +70,11 @@ ref.on("child_added", function(snapshot) {
 
   bed_found = allBeds[alert.bed]
 
-  const nearestNurse = choose_nurse(bed_found.xPos, bed_found.yPos);
+  console.log(bed_found.xPos);
+  console.log(bed_found.yPos);
+  console.log(alert.level);
+  const nearestNurse = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
+  
   
   if (nearestNurse) {
       console.log("Nearest nurse:", nearestNurse);
