@@ -1,6 +1,6 @@
 # cisGO!
 
-cisGO! is a nurse call systems which finds the most suitable nurse based on various paramenters (e.g. compentency level or distance to patient) in a hospital environment. It aims to make processes faster and more efficient. It is a technology based on Cisco Space API.  
+cisGO! is a nurse call system which finds the most suitable nurse based on various paramenters (e.g. compentency level or distance to patient) in a hospital environment. It aims to make processes faster and more efficient. It is a technology based on Cisco Space API.  
 
 ## Install Dependencies
 
