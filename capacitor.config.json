@@ -1,0 +1,13 @@
+{
+  "appId": "ch.mypersonalfavourite.cisgo",
+  "appName": "cisGO!",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

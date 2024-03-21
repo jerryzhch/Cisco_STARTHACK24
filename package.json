@@ -1,0 +1,50 @@
+{
+  "name": "cisgo!",
+  "private": true,
+  "version": "1.0.0",
+  "description": "cisGO!",
+  "repository": "",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "cross-env NODE_ENV=development vite",
+    "build": "cross-env NODE_ENV=production vite build",
+    "build-capacitor-android": "cross-env NODE_ENV=production vite build && npx cap copy android",
+    "postinstall": "cpy --flat ./node_modules/framework7-icons/fonts/*.* ./src/fonts/ && cpy --flat ./node_modules/material-icons/iconfont/*.* ./src/fonts/"
+  },
+  "browserslist": [
+    "IOS >= 15",
+    "Safari >= 15",
+    "last 5 Chrome versions",
+    "last 5 Firefox versions"
+  ],
+  "dependencies": {
+    "@capacitor/android": "^5.7.4",
+    "@capacitor/app": "^5.0.7",
+    "@capacitor/browser": "^5.2.0",
+    "@capacitor/core": "^5.7.4",
+    "@capacitor/keyboard": "^5.0.8",
+    "@capacitor/splash-screen": "^5.0.7",
+    "@capacitor/status-bar": "^5.0.7",
+    "dom7": "^4.0.6",
+    "framework7": "^8.3.2",
+    "framework7-icons": "^5.0.5",
+    "framework7-react": "^8.3.2",
+    "material-icons": "^1.13.12",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "skeleton-elements": "^4.0.1",
+    "swiper": "^11.0.7"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^5.7.4",
+    "@vitejs/plugin-react": "^4.2.1",
+    "cordova-res": "^0.15.4",
+    "cpy-cli": "^5.0.0",
+    "cross-env": "^7.0.3",
+    "less": "^4.2.0",
+    "postcss-preset-env": "^9.5.2",
+    "vite": "^5.2.2"
+  }
+}

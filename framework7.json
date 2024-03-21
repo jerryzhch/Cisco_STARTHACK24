@@ -1,0 +1,25 @@
+{
+  "cwd": "/Users/jeremiah.agboola/Documents/GitHub/Cisco_STARTHACK24",
+  "type": [
+    "capacitor",
+    "web"
+  ],
+  "name": "cisGO!",
+  "framework": "react",
+  "template": "single-view",
+  "bundler": "vite",
+  "cssPreProcessor": "less",
+  "theming": {
+    "customColor": true,
+    "color": "#2fc4b2",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false,
+  "pkg": "ch.mypersonalfavourite.cisgo",
+  "capacitor": {
+    "platforms": [
+      "android"
+    ]
+  }
+}
