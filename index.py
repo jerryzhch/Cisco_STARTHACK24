@@ -58,9 +58,9 @@ for line in r.iter_lines():
         decoded_line = line.decode('utf-8')
         event = json.loads(decoded_line)
 
-        # writes every event to the logs.json in readible format
-        f.write(str(json.dumps(json.loads(line), indent=4, sort_keys=True)))
-
         # gets the event type out the JSON event and prints to screen
-        eventType = event['eventType']
-        print(eventType)
+        eventType = event.get('eventType', None)
+        if eventType and eventType != "IOT_TELEMETRY":
+            # writes every event to the logs.json in readable format
+            f.write(str(json.dumps(event, indent=4, sort_keys=True)) + "\n")
+            print(eventType)
