@@ -70,7 +70,6 @@ const MyApp = () => {
   });
 
   signInAnonymously(auth)
-    .then(() => console.log('hsvho'))
     .catch((error) => {
       console.log(error);
       const errorCode = error.code;
