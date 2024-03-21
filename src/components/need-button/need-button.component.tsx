@@ -4,7 +4,7 @@ import { PictoTypes } from '../../assets/pictograms/picto-types.ts';
 import { ref, push } from 'firebase/database';
 import './need-button.style.less';
 import { BedContext } from '../../pages/patient.tsx';
-import { FB_DATABASE } from '../../firebase.ts';
+import { FB_DATABASE } from '../app.tsx';
 
 const NeedButton = ({ type }) => {
   const bed = useContext(BedContext);
@@ -12,8 +12,10 @@ const NeedButton = ({ type }) => {
 
   const triggerAlert = useCallback(() => {
     push(ref(db, 'alerts/'), {
-      type,
+      alertType: type,
       bed,
+      yPos: 10,
+      xPos: 3,
     }).then(() => {
       f7.dialog.alert('Type: ' + PictoTypes[type]?.desc, 'Alert sent');
     });

@@ -1,4 +1,18 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr 360px;
+
+  .dashboard-grid-left {
+    height: 500px;
+    width: 900px;
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 }

@@ -4,6 +4,7 @@ import './alert-container.style.less';
 import { PictoTypes } from '../../assets/pictograms/picto-types.ts';
 
 const AlertContainer = ({ showFeebackBtns, bed, alertType, distance }) => {
+  console.log({ showFeebackBtns, bed, alertType, distance });
   return (
     <li className="alert-item accordion-item">
       <a href="" className="item-link item-content">

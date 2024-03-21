@@ -3,7 +3,11 @@ import HomePage from '../pages/home.tsx';
 import NursePage from '../pages/nurse.tsx';
 import PatientPage from '../pages/patient.tsx';
 
-var routes = [
+export const PATH_PATIENT = '/patient/';
+export const PATH_NURSE = '/nurse/';
+export const PATH_DASHBOARD = '/dashboard/';
+
+const routes = [
   {
     name: 'home',
     path: '/',
@@ -11,17 +15,17 @@ var routes = [
   },
   {
     name: 'patient',
-    path: '/patient/',
+    path: PATH_PATIENT,
     component: PatientPage,
   },
   {
     name: 'nurse',
-    path: '/nurse/',
+    path: PATH_NURSE,
     component: NursePage,
   },
   {
     name: 'dashboard',
-    path: '/dashboard/',
+    path: PATH_DASHBOARD,
     component: DashboardPage,
   },
 ];
