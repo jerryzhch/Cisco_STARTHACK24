@@ -7,8 +7,24 @@ import socket
 import os
 from datetime import datetime
 import sys
+import time
 
 import matplotlib.pyplot as plt
+
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+if not firebase_admin._apps:
+
+    # Fetch the service account key JSON file contents
+    cred = credentials.Certificate('starthack2024-firebase-adminsdk-jupxu-2baa93ecc2.json')
+
+    # Initialize the app with a service account, granting admin privileges
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://starthack2024-default-rtdb.europe-west1.firebasedatabase.app/'
+    })
+
 # import pandas
 
 def get_API_Key_and_auth():
@@ -87,26 +103,53 @@ for line in r.iter_lines():
             
             json_path = 'src/components/dashboard-grid/positions.json'
             data[event['deviceLocationUpdate']['device']['deviceId']] = (event['deviceLocationUpdate']['xPos'],event['deviceLocationUpdate']['yPos'])
-            data = data[-10:]
-            new_data = []
-            for device_id, (x, y) in data.items():
-                new_dict = {
-                    "id": device_id,
-                    "x": x*3,
-                    "y": y*3
-                }
-                new_data.append(new_dict)
+            
+            # data = data[1:6]
+            # new_data = []
+            
 
             # with open('positions.json', 'w') as json_file:
+            
+            # ref.update({
+            #     'nurses/nurse5': {
+            #         'available': True,
+            #         'level': "2",
+            #         'online': True,
+            #         'xPos': 50,
+            #         'yPos': 25,
+            #     },
+            #     'nurses/nurse6': {
+            #         'available': True,
+            #         'level': "3",
+            #         'online': True,
+            #         'xPos': 200,
+            #         'yPos': 200,
+            #     }
+            # })
             flag = False
             if datetime.now().second%30 == 0 and not flag:
                 flag = True
-                with open(json_path, 'w') as json_file:
-                    json.dump(new_data, json_file)
+                ref = db.reference('/')
+                i = 0
+                for device_id, (x, y) in data.items():
+                    i+=1
+                    if 3<i and i <10:
+                        new_dict = {
+                            f'nurses/nurse{i-3}' : {
+                            "xPos": x*3,
+                            "yPos": y*3 }
+                        }
+                        #new_data.append(new_dict)
+                        ref.update(
+                            new_dict
+                        )
+
+
             elif datetime.now().second%30 != 0:
                 flag = False
                 # update_plot(data)
             print(data)
+            time.sleep(1)
 # %%
 
 
