@@ -4,11 +4,19 @@ import { FB_DATABASE } from '../app.tsx';
 
 const NurseChooser = ({ setNurse }) => {
   const db = useContext(FB_DATABASE);
-  const [nursesList, setNursesList] = useState<string[]>([]);
+  const [nursesList, setNursesList] = useState([]);
   const nurseRef = ref(db, '/nurses');
+
+  const setNurseObject = (n: string) => {
+    const newObject = {};
+    Object.assign(newObject, nursesList[n]);
+    newObject['name'] = n;
+    setNurse(newObject);
+  };
+
   useEffect(() => {
     get(nurseRef).then((snapshot) => {
-      setNursesList(Object.keys(snapshot.val()));
+      setNursesList(snapshot.val());
     });
   });
 
@@ -23,8 +31,8 @@ const NurseChooser = ({ setNurse }) => {
       <div className="list links-list demo-fab-sheet fab-morph-target">
         <ul>
           {nursesList &&
-            nursesList.map((n) => (
-              <li key={n} onClick={() => setNurse(n)}>
+            Object.keys(nursesList).map((n) => (
+              <li key={n} onClick={() => setNurseObject(n)}>
                 <a className="fab-close">{n}</a>
               </li>
             ))}

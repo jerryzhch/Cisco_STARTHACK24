@@ -91,7 +91,6 @@ function delegateAlerts() {
   const kkey = Object.keys(allAlerts).reverse()[0];
   const alert = allAlerts[kkey];
   bed_found = allBeds[alert.bed];
-
   const [nearestNurse, dist] = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
 
   if (nearestNurse) {
@@ -100,7 +99,8 @@ function delegateAlerts() {
     // Assign alert to nearest nurse
     const nearestNurseRef = db.ref('/nurses/' + nearestNurse + '/alerts');
     alert['distance'] = dist;
-    ref.update({ [kkey]: { delegatedTo: nearestNurse } });
+    const currentAlert = db.ref('/alerts/' + kkey);
+    currentAlert.update({ delegatedTo: nearestNurse });
     nearestNurseRef.update({ [kkey]: alert });
     nearestNurseRef.parent.update({ available: false });
   } else {

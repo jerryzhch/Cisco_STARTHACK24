@@ -8,13 +8,12 @@ import NurseChooser from '../components/nurse-chooser/nurse-chooser.component.ts
 const NursePage = () => {
   const db = useContext(FB_DATABASE);
   const auth = useContext(FB_AUTH);
-  const [currentNurse, setCurrentNurse] = useState<string>(undefined);
-
+  const [currentNurse, setCurrentNurse] = useState(undefined);
   useEffect(() => {
     let presenceRef: DatabaseReference;
     auth.onAuthStateChanged((currentUser) => {
-      if (currentUser && currentNurse) {  
-        presenceRef = ref(db, 'nurses/' + currentNurse);
+      if (currentUser && currentNurse) {
+        presenceRef = ref(db, 'nurses/' + currentNurse.name);
       }
       return () => {
         presenceRef ? update(presenceRef, { available: true }) : undefined;
@@ -27,10 +26,13 @@ const NursePage = () => {
       <Navbar>
         <NavLeft></NavLeft>
         <NavTitle>cisGO!</NavTitle>
-        <NavRight>Current Nurse: {currentNurse}</NavRight>
+        <NavRight>
+          {currentNurse && 'Current: ' + currentNurse.name}
+          <br /> {currentNurse && 'Profil: ' + currentNurse.level}
+        </NavRight>
       </Navbar>
       <NurseChooser setNurse={setCurrentNurse}></NurseChooser>
-      <AlertTicker currentNurse={currentNurse}></AlertTicker>
+      <AlertTicker currentNurse={currentNurse && currentNurse.name}></AlertTicker>
     </Page>
   );
 };

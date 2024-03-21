@@ -8,9 +8,9 @@ const NeedButtonGrid = () => (
     <NeedButton type="pain"></NeedButton>
     <NeedButton type="nursing"></NeedButton>
     <NeedButton type="support"></NeedButton>
-    <NeedButton type="pain"></NeedButton>
-    <NeedButton type="nursing"></NeedButton>
-    <NeedButton type="support"></NeedButton>
+    <NeedButton type="drink"></NeedButton>
+    <NeedButton type="cold"></NeedButton>
+    <NeedButton type="infusion"></NeedButton>
   </div>
 );
 
