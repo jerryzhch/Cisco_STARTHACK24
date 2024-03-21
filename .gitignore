@@ -50,3 +50,24 @@ resources/windows/splash
 
 # Production build
 www/
+
+*.py[co]
+*.egg-info/
+.DS_Store
+.eggs/
+__pycache__/
+
+/build/
+/dist/
+/public/
+/venv/
+
+/.mypy_cache/
+/.pytest_cache/
+/htmlcov/
+/.coverage
+/coverage.xml
+/report.xml
+
+*.sw[op]
+/.vscode
