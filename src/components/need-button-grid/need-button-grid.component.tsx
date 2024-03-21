@@ -5,12 +5,12 @@ import './need-button-grid.style.less';
 
 const NeedButtonGrid = () => (
   <div className="need-button-grid">
-    <NeedButton name="Essen"></NeedButton>
-    <NeedButton name="Trinken"></NeedButton>
-    <NeedButton name="Essen"></NeedButton>
-    <NeedButton name="Trinken"></NeedButton>
-    <NeedButton name="Essen"></NeedButton>
-    <NeedButton name="Trinken"></NeedButton>
+    <NeedButton type="pain"></NeedButton>
+    <NeedButton type="nursing"></NeedButton>
+    <NeedButton type="support"></NeedButton>
+    <NeedButton type="pain"></NeedButton>
+    <NeedButton type="nursing"></NeedButton>
+    <NeedButton type="support"></NeedButton>
   </div>
 );
 

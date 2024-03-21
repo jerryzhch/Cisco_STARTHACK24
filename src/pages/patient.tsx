@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { Page } from 'framework7-react';
 import NeedButtonGrid from '../components/need-button-grid/need-button-grid.component.tsx';
 
-const PatientPage = () => (
-  <Page name="patient" style={{ overflow: 'hidden' }}>
-    {/* Top Navbar */}
-    <NeedButtonGrid></NeedButtonGrid>
-  </Page>
-);
+export const BedContext = createContext('103.1');
+
+const PatientPage = () => {
+  return (
+    <Page name="patient">
+      {/* Top Navbar */}
+      <NeedButtonGrid></NeedButtonGrid>
+    </Page>
+  );
+};
 export default PatientPage;
