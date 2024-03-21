@@ -5,8 +5,6 @@ import json
 import socket
 import os
 from datetime import datetime
-import sys
-import time
 
 import matplotlib.pyplot as plt
 
@@ -94,37 +92,11 @@ for line in r.iter_lines():
         # gets the event type out the JSON event and prints to screen
         eventType = event.get('eventType', None)
         if eventType and eventType == "DEVICE_LOCATION_UPDATE" and event["partnerTenantId"] == "Simulation-Workspaces":
-
-            # writes every event to the logs.json in readable format
-            # f.write(str(json.dumps(event, indent=4, sort_keys=True)) + "\n")
-            # print(event['deviceLocationUpdate']['device']['deviceId']) #} {event['xPos']}')
-            # print(event['deviceLocationUpdate']['xPos'])
             
             json_path = 'src/components/dashboard-grid/positions.json'
             data[event['deviceLocationUpdate']['device']['deviceId']] = (event['deviceLocationUpdate']['xPos'],event['deviceLocationUpdate']['yPos'])
             
-            # data = data[1:6]
-            # new_data = []
-            
-
-            # with open('positions.json', 'w') as json_file:
-            
-            # ref.update({
-            #     'nurses/nurse5': {
-            #         'available': True,
-            #         'level': "2",
-            #         'online': True,
-            #         'xPos': 50,
-            #         'yPos': 25,
-            #     },
-            #     'nurses/nurse6': {
-            #         'available': True,
-            #         'level': "3",
-            #         'online': True,
-            #         'xPos': 200,
-            #         'yPos': 200,
-            #     }
-            # })
+        
             flag = False
             # due to firebase upload limitations
             if datetime.now().second%20 == 0 and not flag:
@@ -135,11 +107,19 @@ for line in r.iter_lines():
                     ref = db.reference(f'/nurses/nurse{(i-3)%8}')
                     i+=1
                     if 3<i and i <10:
+                        x1 = x*2.5
+                        y1 = y*2.5
+
+                        # Set bounding box
+                        if x1 > 900:
+                            x1=900
+                        if y1 > 550:
+                            y1=550
+                            
                         new_dict = {
-                            "xPos": x*3,
-                            "yPos": y*3 
+                            "xPos": x1,
+                            "yPos": y1 
                         }
-                        #new_data.append(new_dict)
                         ref.update(
                             new_dict
                         )
