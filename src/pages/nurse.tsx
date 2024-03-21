@@ -1,29 +1,36 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Page, Navbar, NavLeft, NavTitle, NavRight } from 'framework7-react';
 import AlertTicker from '../components/alert-container/alert-ticker.component.tsx';
-import { ref, onDisconnect, update } from 'firebase/database';
+import { ref, update, DatabaseReference } from 'firebase/database';
 import { FB_AUTH, FB_DATABASE } from '../components/app.tsx';
+import NurseChooser from '../components/nurse-chooser/nurse-chooser.component.tsx';
 
 const NursePage = () => {
   const db = useContext(FB_DATABASE);
   const auth = useContext(FB_AUTH);
-  useEffect(() => {
-    if (auth.currentUser) {
-      const presenceRef = ref(db, 'nurses/' + auth.currentUser?.uid);
+  const [currentNurse, setCurrentNurse] = useState<string>(undefined);
 
-      update(presenceRef, { available: true, test: 'test' });
-      onDisconnect(presenceRef).update({ available: false });
-    }
-  }, [auth]);
+  useEffect(() => {
+    let presenceRef: DatabaseReference;
+    auth.onAuthStateChanged((currentUser) => {
+      if (currentUser && currentNurse) {  
+        presenceRef = ref(db, 'nurses/' + currentNurse);
+      }
+      return () => {
+        presenceRef ? update(presenceRef, { available: true }) : undefined;
+      };
+    });
+  }, [auth, currentNurse]);
   return (
     <Page name="nurse">
       {/* Top Navbar */}
       <Navbar>
         <NavLeft></NavLeft>
         <NavTitle>cisGO!</NavTitle>
-        <NavRight></NavRight>
+        <NavRight>Current Nurse: {currentNurse}</NavRight>
       </Navbar>
-      <AlertTicker></AlertTicker>
+      <NurseChooser setNurse={setCurrentNurse}></NurseChooser>
+      <AlertTicker currentNurse={currentNurse}></AlertTicker>
     </Page>
   );
 };

@@ -3,20 +3,21 @@ import React from 'react';
 import './alert-container.style.less';
 import { PictoTypes } from '../../assets/pictograms/picto-types.ts';
 
-const AlertContainer = ({ showFeebackBtns, bed, alertType, distance }) => {
-  console.log({ showFeebackBtns, bed, alertType, distance });
+const AlertContainer = ({ showFeebackBtns, alertInfo, acceptAlert }) => {
   return (
     <li className="alert-item accordion-item">
       <a href="" className="item-link item-content">
         <div className="item-inner">
           <div className="alert-item-grid">
-            <img className="alert-icon" src={`../assets/pictograms/${PictoTypes[alertType].pictogram}`} />
-            <p className="alert-location">{bed.replace(':', '.')}</p>
-            <p className="alert-distance">
-              {'Distance'}
-              <br />
-              {distance}
-            </p>
+            <img className="alert-icon" src={`../assets/pictograms/${PictoTypes[alertInfo.alertType].pictogram}`} />
+            <p className="alert-location">{alertInfo.bed.replace(':', '.')}</p>
+            {alertInfo.distance && (
+              <p className="alert-distance">
+                {'Distance'}
+                <br />
+                <span>{Math.round(alertInfo.distance) + ' m'}</span>
+              </p>
+            )}
           </div>
         </div>
       </a>
@@ -26,7 +27,7 @@ const AlertContainer = ({ showFeebackBtns, bed, alertType, distance }) => {
             <Button large outline className="feedback-button decline-button" onClick={function () {}}>
               Ablehnen
             </Button>
-            <Button large outline className="feedback-button accept-button" onClick={function () {}}>
+            <Button large outline className="feedback-button accept-button" onClick={() => acceptAlert(alertInfo.id)}>
               Annehmen
             </Button>
           </div>
