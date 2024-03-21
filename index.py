@@ -145,7 +145,7 @@ for line in r.iter_lines():
                         )
 
 
-            elif datetime.now().second%30 != 0:
+            elif datetime.now().second%60 != 0:
                 flag = False
                 # update_plot(data)
             print(data)
