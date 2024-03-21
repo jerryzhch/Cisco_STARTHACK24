@@ -3,7 +3,6 @@ import NeedButton from '../need-button/need-button.component.js';
 import './need-button-grid.style.less';
 
 const NeedButtonGrid = ({ config }) => {
-  console.log(config);
   switch (config) {
     case 'simple':
       return (
