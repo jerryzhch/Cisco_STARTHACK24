@@ -11,7 +11,7 @@ const DashboardGrid = () => {
       <div className="dashboard-grid-left">
         <BlockTitle>Station Overview</BlockTitle>
         <Block inset>
-          <div style={{ display: 'grid', gap: '40px' }}>
+          <div style={{ display: 'grid', gap: '80px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <div className="grid-3">
                 <Room name="Room 101"></Room>
