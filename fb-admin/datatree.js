@@ -17,6 +17,8 @@ const bedsRef = db.ref('/beds');
 
 const allNurses = {};
 const allBeds = {};
+const allAlerts = {};
+let i = false;
 
 // Function to calculate the distance between two points
 function calculateDistance(x1, y1, x2, y2) {
@@ -62,40 +64,46 @@ bedsRef.on('child_added', (snapshot) => {
   allBeds[snapshot.key] = snapshot.val();
 });
 
-nursesRef
-  .once('value', (snapshot) => {
-    snapshot.forEach((s) => {
-      allNurses[s.key] = s.val();
-    });
-  })
-  .then(() => {
-    bedsRef
-      .once('value', (snapshot) => {
-        snapshot.forEach((s) => {
-          allBeds[s.key] = s.val();
-        });
-      })
-      .then(() => {
-        // Listener for changes in alerts
-        ref.on('child_added', function (snapshot) {
-          const alert = snapshot.val();
+// Listener for changes in alerts
+ref.on('child_added', function (snapshot) {
+  if (!snapshot.val().acceptedBy) {
+    allAlerts[snapshot.key] = snapshot.val();
+  }
+  if (i === false) {
+    i = setInterval(() => {
+      delegateAlerts();
+    }, 2000);
+  }
+});
+ref.on('child_changed', function (snapshot) {
+  if (snapshot.val().acceptedBy || snapshot.val().delegatedTo) delete allAlerts[snapshot.key];
+});
+ref.on('child_removed', function (snapshot) {
+  delete allAlerts[snapshot.key];
+});
 
-          bed_found = allBeds[alert.bed];
+function delegateAlerts() {
+  if (Object.keys(allAlerts).length === 0) {
+    clearInterval(i);
+    i = false;
+    return;
+  }
+  const kkey = Object.keys(allAlerts).reverse()[0];
+  const alert = allAlerts[kkey];
+  bed_found = allBeds[alert.bed];
 
-          const [nearestNurse, dist] = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
+  const [nearestNurse, dist] = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
 
-          if (nearestNurse) {
-            console.log('Nearest nurse:', nearestNurse);
+  if (nearestNurse) {
+    console.log('Nearest nurse:', nearestNurse);
 
-            // Assign alert to nearest nurse
-            const nearestNurseRef = db.ref('/nurses/' + nearestNurse + '/alerts');
-            alert['distance'] = dist;
-            nearestNurseRef.update({ [snapshot.key]: alert });
-            nearestNurseRef.parent.update({ available: false });
-          } else {
-            console.log('No available nurse found.');
-          }
-        });
-      });
-  });
-//
+    // Assign alert to nearest nurse
+    const nearestNurseRef = db.ref('/nurses/' + nearestNurse + '/alerts');
+    alert['distance'] = dist;
+    ref.update({ [kkey]: { delegatedTo: nearestNurse } });
+    nearestNurseRef.update({ [kkey]: alert });
+    nearestNurseRef.parent.update({ available: false });
+  } else {
+    console.log('No available nurse found.');
+  }
+}
