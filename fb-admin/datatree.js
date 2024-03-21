@@ -27,6 +27,7 @@ function calculateDistance(x1, y1, x2, y2) {
 function choose_nurse(x, y, alertLevel) {
   let minDistance = Infinity;
   let nearestNurse = null;
+  let dist;
 
   Object.keys(allNurses)
     .filter((a) => allNurses[a].level >= alertLevel)
@@ -35,7 +36,7 @@ function choose_nurse(x, y, alertLevel) {
       const nurse = allNurses[nurseId];
       const nurseX = nurse.xPos;
       const nurseY = nurse.yPos;
-      const dist = calculateDistance(x, y, nurseX, nurseY);
+      dist = calculateDistance(x, y, nurseX, nurseY);
 
       // Check if the nurse is available
       if (dist < minDistance && nurse.available) {
@@ -44,12 +45,11 @@ function choose_nurse(x, y, alertLevel) {
       }
     });
 
-  return nearestNurse;
+  return [nearestNurse, dist];
 }
 
 nursesRef.on('child_added', (snapshot) => {
   allNurses[snapshot.key] = snapshot.val();
-  console.log(allNurses);
 });
 nursesRef.on('child_changed', (snapshot) => {
   allNurses[snapshot.key] = snapshot.val();
@@ -82,13 +82,14 @@ nursesRef
 
           bed_found = allBeds[alert.bed];
 
-          const nearestNurse = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
+          const [nearestNurse, dist] = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
 
           if (nearestNurse) {
             console.log('Nearest nurse:', nearestNurse);
 
             // Assign alert to nearest nurse
             const nearestNurseRef = db.ref('/nurses/' + nearestNurse + '/alerts');
+            alert['distance'] = dist;
             nearestNurseRef.update({ [snapshot.key]: alert });
             nearestNurseRef.parent.update({ available: false });
           } else {
