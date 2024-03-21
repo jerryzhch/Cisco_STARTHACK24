@@ -126,12 +126,13 @@ for line in r.iter_lines():
             #     }
             # })
             flag = False
-            if datetime.now().second%10 == 0 and not flag:
+            # due to firebase upload limitations
+            if datetime.now().second%30 == 0 and not flag:
                 flag = True
                 i = 0
                 for device_id, (x, y) in data.items():
-                    print(f'/nurses/nurse{i-3}')
-                    ref = db.reference(f'/nurses/nurse{i-3}')
+                    print(f'/nurses/nurse{(i-3)%8}')
+                    ref = db.reference(f'/nurses/nurse{(i-3)%8}')
                     i+=1
                     if 3<i and i <10:
                         new_dict = {
