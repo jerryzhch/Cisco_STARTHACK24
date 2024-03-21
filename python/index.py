@@ -1,4 +1,4 @@
-
+"""Get data from Cisco Space API."""
 
 import requests
 import json
