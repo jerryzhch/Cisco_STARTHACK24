@@ -27,7 +27,7 @@ const AlertTicker = ({ currentNurse = undefined, showFeebackBtns = true }) => {
     let unsubscribe: Unsubscribe;
     auth.onAuthStateChanged((currentUser) => {
       if (currentUser) {
-        let dbRefPath = window.location.pathname === PATH_NURSE ? 'nurses/' + currentNurse + '/alerts' : 'alerts/';
+        let dbRefPath = window.location.pathname === PATH_NURSE ? 'nurses/' + currentNurse + '/alerts' : '/alerts';
         unsubscribe = onValue(query(ref(db, dbRefPath), orderByKey()), (snapshot) => {
           const tickerDataArray = [];
           snapshot.forEach((childSnapshot) => {
@@ -43,7 +43,7 @@ const AlertTicker = ({ currentNurse = undefined, showFeebackBtns = true }) => {
       }
     });
     return () => unsubscribe();
-  }, [currentNurse]);
+  }, [currentNurse, tickerData]);
 
   return (
     <Block inset>

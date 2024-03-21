@@ -1,15 +1,29 @@
 import { BlockTitle, Block } from 'framework7-react';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AlertTicker from '../alert-container/alert-ticker.component.tsx';
 import './dashboard-grid.style.less';
-import positions from './positions.json';
 import Room from './room.component.tsx';
+import { FB_DATABASE } from '../app.tsx';
+import { onValue, ref } from '@firebase/database';
 
 const DashboardGrid = () => {
+  const db = useContext(FB_DATABASE);
+  const [nursePositions, setNursePositions] = useState(undefined);
+  const [timestamp, setTimestamp] = useState(new Date().toLocaleDateString());
+  const nursesRef = ref(db, '/nurses');
+
+  useEffect(() => {
+    const unsubscribe = onValue(nursesRef, (snapshot) => {
+      setNursePositions(snapshot.val());
+      setTimestamp(new Date().toLocaleString());
+    });
+    return () => unsubscribe();
+  }, [nursePositions]);
+
   return (
     <div className="dashboard-grid">
-      <div className="dashboard-grid-left">
-        <BlockTitle>Station Overview</BlockTitle>
+      <div className="dashboard-grid-left" style={{}}>
+        <BlockTitle>Station Overview // Last update: {timestamp}</BlockTitle>
         <Block inset>
           <div style={{ display: 'grid', gap: '80px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -29,23 +43,25 @@ const DashboardGrid = () => {
               <Room name="Room 203"></Room>
             </div>
           </div>
-
-          <React.Fragment>
-            {positions.map((position, index) => (
-              <img
-                key={index}
-                src={'../../assets/pictograms/nurse.png'}
-                alt="nurse"
+          {nursePositions &&
+            Object.keys(nursePositions).map((k) => (
+              <div
                 style={{
+                  display: 'flex',
+                  flexDirection: 'column',
                   position: 'absolute',
-                  top: `${position.y}px`,
-                  left: `${position.x}px`,
+                  color: nursePositions[k].available ? 'green' : 'red',
+                  top: `${nursePositions[k].yPos}px`,
+                  left: `${nursePositions[k].xPos}px`,
+                  fontWeight: 'bold',
                   width: '40px',
                   height: '40px',
                 }}
-              />
+              >
+                <img key={k} src={'../../assets/pictograms/nurse.png'} alt="nurse" />
+                <p style={{ margin: 0 }}>{k}</p>
+              </div>
             ))}
-          </React.Fragment>
         </Block>
       </div>
       <div className="dashboard-grid-right">
