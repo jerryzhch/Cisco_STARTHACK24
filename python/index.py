@@ -22,8 +22,6 @@ if not firebase_admin._apps:
         'databaseURL': 'https://starthack2024-default-rtdb.europe-west1.firebasedatabase.app/'
     })
 
-# import pandas
-
 def get_API_Key_and_auth():
     # Gets public key from spaces and places in correct format
     print("-- No API Key Found --")
@@ -69,11 +67,13 @@ r = s.get(
 
 # Jumps through every new event we have through firehose
 print("Starting Stream")
-def update_plot(data):
+
+
+def update_plot(data): # Show data in Pyplot
    
-    plt.clf()  # Clear the previous plot
+    plt.clf()  
     for obj_id, (x, y) in data.items():
-        plt.scatter(x, y, label=obj_id)  # Scatter plot each object
+        plt.scatter(x, y, label=obj_id)  
     plt.xlabel('X-axis')
     plt.ylabel('Y-axis')
     plt.title('Object Positions')
@@ -81,7 +81,9 @@ def update_plot(data):
     plt.pause(0.01)
     plt.draw()
     plt.show(block=False)
+
 data = {}
+
 for line in r.iter_lines():
     if line:
     
@@ -115,7 +117,7 @@ for line in r.iter_lines():
                             x1=900
                         if y1 > 550:
                             y1=550
-                            
+
                         new_dict = {
                             "xPos": x1,
                             "yPos": y1 
