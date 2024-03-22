@@ -26,11 +26,12 @@ Button screen for patients|  Alarm screen for nurses
 ### Install dependencies
 
 First of all we need to install dependencies, run in terminal
-Full installation:
+
+**Option 1**: Full installation:
 ```shell
 docker-compose up
 ```
-**Alternative**: Custom installation
+**Option 2**: Custom installation
 1. Web/GUI
 ```shell
 npm install && npm start
