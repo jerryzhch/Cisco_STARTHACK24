@@ -11,7 +11,7 @@ const DashboardGrid = () => {
   const [nursePositions, setNursePositions] = useState(undefined);
   const [bedPositions, setBedPositions] = useState(undefined);
   const [timestamp, setTimestamp] = useState(new Date().toLocaleDateString());
-  const bedRef = ref(db, '/beds')
+  const bedRef = ref(db, '/beds');
   const nursesRef = ref(db, '/nurses');
 
   useEffect(() => {
@@ -21,7 +21,6 @@ const DashboardGrid = () => {
     });
     return () => unsubscribe();
   }, [bedPositions]);
-  
 
   useEffect(() => {
     const unsubscribe = onValue(nursesRef, (snapshot) => {
@@ -65,17 +64,17 @@ const DashboardGrid = () => {
                   top: `${nursePositions[k].yPos}px`,
                   left: `${nursePositions[k].xPos}px`,
                   fontWeight: 'bold',
-                  width: '40px',
-                  height: '40px',
+                  width: '60px',
+                  height: '60px',
                 }}
               >
                 <img key={k} src={'../../public/pictograms/nurse.png'} alt="nurse" />
                 <p style={{ margin: 0 }}>{k}</p>
               </div>
             ))}
-           {bedPositions && 
+          {bedPositions &&
             Object.keys(bedPositions).map((b) => (
-            <div
+              <div
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -89,7 +88,8 @@ const DashboardGrid = () => {
               >
                 <img key={b} src={'../../public/pictograms/19_bed.png'} alt="bed" />
                 <p style={{ margin: 0 }}>{b}</p>
-              </div> ))}
+              </div>
+            ))}
         </Block>
       </div>
       <div className="dashboard-grid-right">
