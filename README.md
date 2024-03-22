@@ -32,10 +32,6 @@ Monitor alarms, nurses and status
 
 ## ⬇️ Installation
 
-### Install dependencies
-
-First of all we need to install dependencies, run in terminal
-
 **Option 1**: Full installation:
 ```shell
 docker-compose up
@@ -55,9 +51,13 @@ npm install && node datatree.js
 ```
 
 
-### Other Dependencies
-Also in use: Firebase Realtime Database and [Cisco Space API](https://partners.dnaspaces.eu/docs/v1/basic/index.html#!c-dnas-partners-overview.html). 
-
+### Technologies Used
+- [Cisco Space API](https://partners.dnaspaces.eu/docs/v1/basic/index.html#!c-dnas-partners-overview.html). 
+- Firebase Realtime Database
+- Framework7 (UI Framework)
+- Docker
+- Python
+- No Sleep :)
 
 ## ✍️ Authors
 
