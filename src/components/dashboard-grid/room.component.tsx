@@ -6,11 +6,15 @@ const Room = ({ name, bigger = false }) => {
       style={{
         width: bigger ? '200px' : '150px',
         height: '150px',
-        background: 'lightgreen',
+        backgroundColor: 'lightcoral',
+        borderRadius: '10px',
+        display: 'flex',
         border: '2px solid black',
       }}
     >
-      <div className="room-label">{name}</div>
+      <span className="room-label" style={{ margin: 'auto' }}>
+        {name}
+      </span>
     </div>
   );
 };

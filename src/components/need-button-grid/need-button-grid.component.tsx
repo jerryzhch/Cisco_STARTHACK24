@@ -29,11 +29,11 @@ const NeedButtonGrid = ({ config }) => {
         <div className="need-button-grid-advanced">
           <NeedButton type="pain"></NeedButton>
           <NeedButton type="nursing"></NeedButton>
-          <NeedButton type="nursing"></NeedButton>
+          <NeedButton type="infusion"></NeedButton>
           <NeedButton type="support"></NeedButton>
           <NeedButton type="walk"></NeedButton>
           <NeedButton type="media"></NeedButton>
-          <NeedButton type="support"></NeedButton>
+          <NeedButton type="bandage"></NeedButton>
           <NeedButton type="drink"></NeedButton>
           <NeedButton type="getup"></NeedButton>
           <NeedButton type="bed"></NeedButton>

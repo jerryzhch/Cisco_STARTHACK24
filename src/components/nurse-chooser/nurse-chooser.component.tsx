@@ -1,6 +1,7 @@
 import { get, ref } from 'firebase/database';
 import React, { useContext, useEffect, useState } from 'react';
 import { FB_DATABASE } from '../app.tsx';
+import './nurse-chooser.style.less';
 
 const NurseChooser = ({ setNurse }) => {
   const db = useContext(FB_DATABASE);

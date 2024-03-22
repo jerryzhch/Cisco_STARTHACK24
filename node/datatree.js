@@ -26,13 +26,15 @@ function calculateDistance(x1, y1, x2, y2) {
 }
 
 // Function to choose the nearest nurse based on the provided x and y coordinates
-function choose_nurse(x, y, alertLevel) {
+function choose_nurse(x, y, alert) {
   let minDistance = Infinity;
   let nearestNurse = null;
   let dist;
 
   Object.keys(allNurses)
-    .filter((a) => allNurses[a].level >= alertLevel)
+    .filter((a) => allNurses[a].available === true)
+    .filter((a) => alert.declinedBy !== a)
+    .filter((a) => allNurses[a].level >= alert.level)
     .sort((a, b) => allNurses[a].level - allNurses[b].level)
     .map((nurseId) => {
       const nurse = allNurses[nurseId];
@@ -66,18 +68,28 @@ bedsRef.on('child_added', (snapshot) => {
 
 // Listener for changes in alerts
 ref.on('child_added', function (snapshot) {
-  if (!snapshot.val().acceptedBy) {
+  if (!snapshot.val().acceptedBy && !snapshot.val().delegatedTo) {
     allAlerts[snapshot.key] = snapshot.val();
   }
-  if (i === false) {
+  if (i === false && Object.keys(allAlerts).length > 0) {
     i = setInterval(() => {
       delegateAlerts();
     }, 2000);
   }
 });
 ref.on('child_changed', function (snapshot) {
-  if (snapshot.val().acceptedBy || snapshot.val().delegatedTo) delete allAlerts[snapshot.key];
+  if (!snapshot.val().acceptedBy && !snapshot.val().delegatedTo) {
+    allAlerts[snapshot.key] = snapshot.val();
+  } else {
+    delete allAlerts[snapshot.key];
+  }
+  if (i === false && Object.keys(allAlerts).length > 0) {
+    i = setInterval(() => {
+      delegateAlerts();
+    }, 2000);
+  }
 });
+
 ref.on('child_removed', function (snapshot) {
   delete allAlerts[snapshot.key];
 });
@@ -91,19 +103,25 @@ function delegateAlerts() {
   const kkey = Object.keys(allAlerts).reverse()[0];
   const alert = allAlerts[kkey];
   bed_found = allBeds[alert.bed];
-  const [nearestNurse, dist] = choose_nurse(bed_found.xPos, bed_found.yPos, alert.level);
+  try {
+    const [nearestNurse, dist] = choose_nurse(bed_found.xPos, bed_found.yPos, alert);
 
-  if (nearestNurse) {
-    console.log('Nearest nurse:', nearestNurse);
+    if (nearestNurse) {
+      console.log('Nearest nurse:', nearestNurse);
 
-    // Assign alert to nearest nurse
-    const nearestNurseRef = db.ref('/nurses/' + nearestNurse + '/alerts');
-    alert['distance'] = dist;
-    const currentAlert = db.ref('/alerts/' + kkey);
-    currentAlert.update({ delegatedTo: nearestNurse });
-    nearestNurseRef.update({ [kkey]: alert });
-    nearestNurseRef.parent.update({ available: false });
-  } else {
-    console.log('No available nurse found.');
-  }
+      // Assign alert to nearest nurse
+      const nearestNurseRef = db.ref('/nurses/' + nearestNurse + '/alerts');
+      alert['distance'] = dist;
+      const currentAlert = db.ref('/alerts/' + kkey);
+      currentAlert.get().then((snapshot) => {
+        if (!snapshot.val().delegatedTo) {
+          currentAlert.update({ delegatedTo: nearestNurse });
+          nearestNurseRef.update({ [kkey]: alert });
+          nearestNurseRef.parent.update({ available: false });
+        }
+      });
+    } else {
+      console.log('No available nurse found.');
+    }
+  } catch (error) {}
 }
