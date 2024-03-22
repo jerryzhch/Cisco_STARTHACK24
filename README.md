@@ -13,13 +13,22 @@ This project was part of the Cisco Challenge at the START Global Hackathon 2024.
 ### Multiple UI's to choose from for an effective communication
 2 Alarms |  6 Alarms | 9 Alarms
 :-------------------------:|:-------------------------:| :-------------------------:
-![Tablet](./assets-src/1iPad.png) | ![Tablet](./assets-src/2iPad.png) | ![Tablet](./assets-src/3iPad.png)
+![Tablet](./assets-src/1iPad.png) | ![Tablet](./assets-src/2iPad.png) | ![Tablet](./assets-src/4iPad.png)
 
 
 Button screen for patients|  Alarm screen for nurses
 :-------------------------:|:-------------------------:
 ![Tablet](./assets-src/1tablet.png) | ![Phone](./assets-src/2phone.png)
 
+### Accept alarms
+Get Alarms |  Accept Alarms | See Alarms
+:-------------------------:|:-------------------------:| :-------------------------:
+![Tablet](./assets-src/phone1.png) | ![Tablet](./assets-src/phone2.png) | ![Tablet](./assets-src/phone3.png)
+
+### Innovative Dashboard
+Monitor alarms, nurses and status
+
+![Dashboard](./assets-src/dashboard1.png) 
 
 ## ⬇️ Installation
 
