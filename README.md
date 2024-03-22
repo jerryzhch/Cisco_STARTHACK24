@@ -44,6 +44,9 @@ npm start
 ```
 In order to start the nurse simulation, use `index.py` in the folder `python`. It will get the people movement data from the Cisco Space API and pump it into the Firebase realtime database. 
 
-
 ## ✍️ Authors
 
+[Check out the demo](https://starthack2024.web.app/)
+
+- Jerry Agboola 
+- Jeremy Mrzyglocki
