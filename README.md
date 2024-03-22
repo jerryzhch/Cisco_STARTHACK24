@@ -9,6 +9,13 @@ cisGO! is a nurse call system which finds the most suitable nurse based on vario
 This project was part of the Cisco Challenge at the START Global Hackathon 2024. More information can be found [here](https://github.com/START-Hack/Cisco_STARTHACK24)
 
 ## 📱 Interfaces
+
+### Multiple displays to choose from
+2 Alarms |  6 Alarms | 9 Alarms
+:-------------------------:|:-------------------------:| :-------------------------:
+![Tablet](./assets-src/1iPad.png) | ![Tablet](./assets-src/2iPad.png) | ![Tablet](./assets-src/3iPad.png)
+
+
 Button screen for patients|  Alarm screen for nurses
 :-------------------------:|:-------------------------:
 ![Tablet](./assets-src/1tablet.png) | ![Phone](./assets-src/2phone.png)
