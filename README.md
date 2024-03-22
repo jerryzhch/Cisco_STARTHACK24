@@ -30,16 +30,16 @@ Full installation:
 ```shell
 docker-compose up
 ```
-Alternative: Custom installation
-Web/GUI
+**Alternative**: Custom installation
+1. Web/GUI
 ```shell
 npm install && npm start
 ```
-Cisco Spaces Microservice
+2. Cisco Spaces Microservice
 ```shell
 pip install -r python/requirements.txt 
 ```
-Domain model
+3. Domain model
 ```shell
 npm install && node datatree.js
 ```
