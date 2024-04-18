@@ -6,11 +6,12 @@ services:
     ports:
       - '8000:80'
 
-  cisgo-firebase-admin:
-    build:
-      context: ./node
-
   cisgo-spaces:
     build:
       context: ./python
     command: python ./index.py
+
+  cisgo-firebase-admin:
+    build:
+      context: ./node
+    command: node datatree.js
